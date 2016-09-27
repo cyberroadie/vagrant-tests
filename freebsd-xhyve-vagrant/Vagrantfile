@@ -1,0 +1,19 @@
+Vagrant.configure("2") do |config|
+  config.vm.guest = :freebsd
+  config.vm.box = "freebsdxhyve"
+
+  config.vm.provider :xhyve do |v|
+    v.firmware = %q(fbsd,userboot.so,fbsd.img,"")
+    v.memory = "2G"
+    v.cpus = "2"
+    v.lpc = "com1,stdio"
+    v.acpi = true
+    v.pcis = [
+      "2:0,virtio-net",
+      "4:0,virtio-blk,fbsd.img",
+      "0:0,hostbridge",
+      "31,lpc",
+    ]
+  end
+end
+
